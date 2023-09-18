@@ -16,6 +16,7 @@ public class TopDownCharacterMover : MonoBehaviour
     {
         HandleMovementInput();
         HandleRotationInput();
+        HandleShootInput();
     }
     void HandleMovementInput()
     {
@@ -36,5 +37,11 @@ public class TopDownCharacterMover : MonoBehaviour
             transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
         }
     }
-
+    void HandleShootInput()
+    {
+        if (Input.GetButton("Fire1"))
+        {
+            PlayerGun.Instance.Shoot();
+        }
+    }
 }
