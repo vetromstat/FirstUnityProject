@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour
     }
 
 
-    void Update()
+    void FixedUpdate()
     {   
          if (shouldMove)
         {
@@ -45,7 +45,9 @@ public class Projectile : MonoBehaviour
         {
             transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
         }
-        
-        
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collsion");
     }
 }
