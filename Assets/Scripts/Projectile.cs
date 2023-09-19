@@ -46,8 +46,14 @@ public class Projectile : MonoBehaviour
             transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
         }
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collsion");
+        if (!other.gameObject.name.Contains("Bullet"))
+        {
+            Debug.Log("Collsion");
+        
+        }
+         
+        
     }
 }
