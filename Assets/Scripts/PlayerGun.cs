@@ -8,9 +8,6 @@ public class PlayerGun : MonoBehaviour
     Transform firingPoint;
 
     [SerializeField]
-    GameObject projectilePrefab;
-
-    [SerializeField]
     float firingSpeed;
 
     public static PlayerGun Instance;
@@ -26,8 +23,10 @@ public class PlayerGun : MonoBehaviour
     {
         if (lastTimeShot + firingSpeed <= Time.time) 
         {
+            
+            Projectile _projectile = ProjectilePool.Instance.Instantiate(firingPoint.position, firingPoint.rotation);
+            _projectile.Move();
             lastTimeShot = Time.time;
-            Instantiate(projectilePrefab, firingPoint.position, firingPoint.rotation);
         }
     }
 }

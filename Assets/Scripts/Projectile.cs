@@ -1,31 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+
 
 public class Projectile : MonoBehaviour
 {
     private Vector3 firingPoint;
+
     [SerializeField]
     float projectileSpeed;
+
     [SerializeField]
     float maxProjectileDistance;
+
+    private bool shouldMove = false;
     void Start()
     {
-        firingPoint = transform.position;
+       
     }
 
 
     void Update()
+    {   
+         if (shouldMove)
+        {
+            MoveProjectile();
+        }
+    }
+    public void Move()
     {
-        MoveProjectile();
+        firingPoint = transform.position;
+        shouldMove = true;
     }
     void MoveProjectile()
     {
         
         if (Vector3.Distance(firingPoint, transform.position) > maxProjectileDistance)
         {
-            Destroy(this.gameObject);
+            ProjectilePool.Instance.ReturnToPool(this);
+            shouldMove = false; 
         }else 
         {
             transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
