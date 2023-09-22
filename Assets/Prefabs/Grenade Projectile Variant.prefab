@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 430811c9c7f13eb46b2ee129867bda10, type: 2}
     - target: {fileID: 4973847848294388811, guid: 430908211e140b5448a9b74fa90d929b, type: 3}
       propertyPath: m_Name
-      value: Grenade Variant
+      value: Grenade Projectile Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7164064872727549321, guid: 430908211e140b5448a9b74fa90d929b, type: 3}
       propertyPath: m_LocalScale.x
@@ -66,6 +66,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7164064872727549321, guid: 430908211e140b5448a9b74fa90d929b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984730108799894711, guid: 430908211e140b5448a9b74fa90d929b, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
