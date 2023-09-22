@@ -9,8 +9,6 @@ public class Projectile : MonoBehaviour
 {
     private Vector3 firingPoint;
 
-    public bool canMakeDamage = true;
-
     [SerializeField]
     float projectileSpeed;
 
