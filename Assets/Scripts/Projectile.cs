@@ -9,6 +9,8 @@ public class Projectile : MonoBehaviour
 {
     private Vector3 firingPoint;
 
+    public bool canMakeDamage = true;
+
     [SerializeField]
     float projectileSpeed;
 
@@ -18,13 +20,13 @@ public class Projectile : MonoBehaviour
     private bool shouldMove = false;
     void Start()
     {
-       
+
     }
 
 
     void FixedUpdate()
-    {   
-         if (shouldMove)
+    {
+        if (shouldMove)
         {
             MoveProjectile();
         }
@@ -36,24 +38,23 @@ public class Projectile : MonoBehaviour
     }
     void MoveProjectile()
     {
-        
+
         if (Vector3.Distance(firingPoint, transform.position) > maxProjectileDistance)
         {
             ProjectilePool.Instance.ReturnToPool(this);
-            shouldMove = false; 
-        }else 
+            shouldMove = false;
+        }
+        else
         {
             transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
         }
     }
-    private void OnTriggerEnter(Collider other)
+    public void OnCollisionEnter(Collision collision)
     {
-        if (!other.gameObject.name.Contains("Bullet"))
-        {
-            Debug.Log("Collsion");
-        
-        }
-         
-        
+        ProjectilePool.Instance.ReturnToPool(this);
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        ProjectilePool.Instance.ReturnToPool(this);
     }
 }
