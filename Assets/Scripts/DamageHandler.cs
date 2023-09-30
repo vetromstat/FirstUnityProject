@@ -5,7 +5,7 @@ using UnityEngine;
 public class DamageTake : MonoBehaviour
 {
 
-    private int Health = 100; 
+    private float Health = 100; 
     // Start is called before the first frame update
     void Update()
     {
@@ -20,12 +20,13 @@ public class DamageTake : MonoBehaviour
     {
         if (other.name.Contains("Projectile"))
         {
-            TakeDamage(10);
+            float dmg = other.gameObject.GetComponent<Projectile>().GetDamage();
+            TakeDamage(dmg);
             Debug.Log(Health);
         }
     }
 
-    void TakeDamage(int damage)
+    void TakeDamage(float damage)
     {
         Health -= damage;
     }

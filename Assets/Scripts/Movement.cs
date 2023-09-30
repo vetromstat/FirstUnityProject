@@ -61,7 +61,7 @@ public class TopDownCharacterMover : MonoBehaviour
     {
         isGrounded = false;
     }
-        void HandleJump()
+    void HandleJump()
     {
         if (Input.GetKey(KeyCode.Space) && isGrounded)
         {

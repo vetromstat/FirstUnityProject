@@ -18,11 +18,6 @@ public class EnemyBehavior : MonoBehaviour
     private float z;
     private Vector3 pos;
     
-    void Start()
-    {
-        CopyInstantiationtimer = InstantiationTimer;
-
-    }
 
     void Update()
     {
@@ -35,13 +30,37 @@ public class EnemyBehavior : MonoBehaviour
         InstantiationTimer -= Time.deltaTime;
         if (InstantiationTimer <= 0)
 
-        {
-            x = UnityEngine.Random.Range(-10, 10);
+
+        { // To do next 
+            int choice = UnityEngine.Random.Range(0, 2);
+
+            if (choice == 0)
+            {
+                x = UnityEngine.Random.Range(-20, -10);
+            }
+            else
+            {
+                x = UnityEngine.Random.Range(10, 20);
+            
+            }
+            
+            choice = UnityEngine.Random.Range(0, 2);
+
+            if (choice == 0)
+            {
+                z = UnityEngine.Random.Range(-40,-30);
+            }
+            else
+            {
+                z = UnityEngine.Random.Range(30, 40);
+
+            }
+            
             y = 1.5f;
-            z = UnityEngine.Random.Range(-10, 10);
             pos = new Vector3(x, y, z);
             Instantiate(Enemy, transform.position + pos  , Quaternion.identity);
             InstantiationTimer = CopyInstantiationtimer;
+            
         }
     }
 }

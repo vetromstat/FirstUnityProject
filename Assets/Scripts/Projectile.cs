@@ -15,10 +15,13 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     float maxProjectileDistance;
 
-    private bool shouldMove = false;
-    void Start()
-    {
+    
+    public float damage;
 
+    private bool shouldMove = false;
+    public float GetDamage()
+    {
+        return damage;
     }
 
 
