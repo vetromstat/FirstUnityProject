@@ -9,9 +9,13 @@ public class EnemyMoving : MonoBehaviour
     [SerializeField]
     float moveSpeed;
 
-    GameObject target = GameObject.Find("Player");
+    private GameObject target;
 
-    void Update()
+    public void Start()
+    {
+        target  = GameObject.FindWithTag("Player");
+    }
+    void FixedUpdate()
     {
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, moveSpeed * Time.deltaTime);    
     }

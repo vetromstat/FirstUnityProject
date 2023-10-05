@@ -17,8 +17,13 @@ public class EnemyBehavior : MonoBehaviour
     private float y;
     private float z;
     private Vector3 pos;
-    
 
+
+
+    public void Start()
+    {
+       CopyInstantiationtimer =  InstantiationTimer;
+    }
     void Update()
     {
         CreateEnemy();
@@ -29,7 +34,6 @@ public class EnemyBehavior : MonoBehaviour
     {
         InstantiationTimer -= Time.deltaTime;
         if (InstantiationTimer <= 0)
-
 
         { // To do next 
             int choice = UnityEngine.Random.Range(0, 2);

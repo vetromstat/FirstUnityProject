@@ -23,7 +23,6 @@ public class PlayerGun : MonoBehaviour
     {
         if (lastTimeShot + firingSpeed <= Time.time) 
         {
-            
             Projectile _projectile = ProjectilePool.Instance.Instantiate(firingPoint.position, firingPoint.rotation);
             _projectile.Move();
             lastTimeShot = Time.time;

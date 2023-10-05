@@ -24,7 +24,6 @@ public class Projectile : MonoBehaviour
         return damage;
     }
 
-
     void FixedUpdate()
     {
         if (shouldMove)
