@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using static Unity.VisualScripting.Member;
 
 public class TopDownCharacterMover : MonoBehaviour
@@ -16,9 +17,14 @@ public class TopDownCharacterMover : MonoBehaviour
     private bool isGrounded;
     public Vector3 jump;
     public float jumpForce = 2.0f;
+    private float Health = 100;
+    private Slider Slider;
+    
     public void Start()
     {
         rb = GetComponent<Rigidbody>();
+        Slider = GameObject.FindWithTag("HB").GetComponent<Slider>();
+
     }
     void FixedUpdate()
     {
@@ -26,6 +32,7 @@ public class TopDownCharacterMover : MonoBehaviour
         HandleRotationInput();
         HandleShootInput();
         HandleJump();
+        HandleHP();
     }
     void HandleMovementInput()
     {
@@ -69,4 +76,23 @@ public class TopDownCharacterMover : MonoBehaviour
             isGrounded = false;
         }
     }
+    public void OnCollisionEnter(Collision other)
+    {
+      
+        if (other.gameObject.CompareTag("Deals damage"))
+        {
+            float dmg = 50;
+            Health -= dmg;
+            Slider.value = Health;
+            Debug.Log(Health);
+        }
+    }
+    void HandleHP()
+    {
+        if (Health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }
