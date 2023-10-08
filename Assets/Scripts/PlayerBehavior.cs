@@ -60,13 +60,23 @@ public class TopDownCharacterMover : MonoBehaviour
             PlayerGun.Instance.Shoot();
         }
     }
-    void OnCollisionStay()
+    void OnCollisionStay(Collision other)
     {
         isGrounded = true;
+        rb.velocity = Vector3.zero;
+        if (other.gameObject.CompareTag("Deals damage"))
+        {
+            float dmg = 0.5f;
+            Health -= dmg;
+            Slider.value = Health;
+            Debug.Log(Health);
+        }
     }
     void OnCollisionExit()
     {
         isGrounded = false;
+        
+        
     }
     void HandleJump()
     {
@@ -81,12 +91,13 @@ public class TopDownCharacterMover : MonoBehaviour
       
         if (other.gameObject.CompareTag("Deals damage"))
         {
-            float dmg = 50;
+            float dmg = 1;
             Health -= dmg;
             Slider.value = Health;
             Debug.Log(Health);
         }
     }
+
     void HandleHP()
     {
         if (Health <= 0)

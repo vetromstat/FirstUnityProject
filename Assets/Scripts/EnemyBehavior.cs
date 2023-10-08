@@ -22,15 +22,16 @@ public class EnemyMoving : MonoBehaviour
         HandleHP();
     }
 
-    public void OnTriggerEnter(Collider other)
+    public void OnCollisionEnter(Collision other)
     {
-        if (other.CompareTag("Deals damage"))
-        {
+        if (other.gameObject.CompareTag("Projectile"))
+        { 
             float dmg = other.gameObject.GetComponent<Projectile>().GetDamage();
             Health -= dmg;
             Debug.Log(Health);
         }
     }
+
     void HandleHP()
     {
         if (Health <= 0)

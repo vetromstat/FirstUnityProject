@@ -53,8 +53,5 @@ public class Projectile : MonoBehaviour
     {
         ProjectilePool.Instance.ReturnToPool(this);
     }
-    public void OnTriggerEnter(Collider other)
-    {
-        ProjectilePool.Instance.ReturnToPool(this);
-    }
+ 
 }
