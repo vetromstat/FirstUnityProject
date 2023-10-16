@@ -11,6 +11,8 @@ public class TopDownCharacterMover : MonoBehaviour
 
     [SerializeField]
     private float movementSpeed;
+    [SerializeField]
+    private GameObject deathPanel;
 
     private Rigidbody rb;
 
@@ -76,7 +78,6 @@ public class TopDownCharacterMover : MonoBehaviour
     {
         isGrounded = false;
         
-        
     }
     void HandleJump()
     {
@@ -102,8 +103,17 @@ public class TopDownCharacterMover : MonoBehaviour
     {
         if (Health <= 0)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
+    }
+    void OnDisable()
+    {
+        deathPanel.SetActive(true);
+    }
+
+    void OnEnable()
+    {
+        deathPanel.SetActive(false);
     }
 
 }
