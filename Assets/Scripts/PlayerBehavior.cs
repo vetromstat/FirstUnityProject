@@ -115,5 +115,5 @@ public class TopDownCharacterMover : MonoBehaviour
     {
         deathPanel.SetActive(false);
     }
-
+    
 }
