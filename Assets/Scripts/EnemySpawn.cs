@@ -27,7 +27,7 @@ public class EnemyBehavior : MonoBehaviour
     void Update()
     {
         CreateEnemy();
-        
+        CopyInstantiationtimer -= 0.0001f;
     }
 
     void CreateEnemy()

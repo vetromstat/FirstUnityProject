@@ -92,13 +92,29 @@ public class TopDownCharacterMover : MonoBehaviour
       
         if (other.gameObject.CompareTag("Deals damage"))
         {
-            float dmg = 1;
-            Health -= dmg;
-            Slider.value = Health;
-            Debug.Log(Health);
+            TakeDamage(1);
+        }
+        else if (other.gameObject.CompareTag("Pickup"))
+        {
+            Heal(30);
+            Destroy(other.gameObject);
         }
     }
+    void Heal(float hp)
+    {
+        Health += hp;
+        if (Health > 100) Health = 100;
+        Slider.value += hp;
+        Debug.Log(Health);
+    }
+    void TakeDamage(float dmg)
+    {
 
+        Health -= dmg;
+        Slider.value = Health;
+        Debug.Log(Health);
+
+    }
     void HandleHP()
     {
         if (Health <= 0)
