@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static Unity.VisualScripting.Member;
+using static UnityEditor.Progress;
 
 public class TopDownCharacterMover : MonoBehaviour
 {
@@ -98,6 +99,7 @@ public class TopDownCharacterMover : MonoBehaviour
         {
             Heal(30);
             Destroy(other.gameObject);
+           
         }
     }
     void Heal(float hp)

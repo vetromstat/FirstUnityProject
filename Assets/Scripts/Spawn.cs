@@ -9,29 +9,38 @@ using static UnityEditor.PlayerSettings;
 public class EnemyBehavior : MonoBehaviour
 {
     [SerializeField]
+    private GameObject Enemy;
+    [SerializeField]
     private float InstantiationTimer;
     private float CopyInstantiationtimer;
+
+
+
     [SerializeField]
-    private GameObject Enemy;
-    private float x;
-    private float y;
-    private float z;
-    private Vector3 pos;
+    private GameObject BonusCrate;
+    [SerializeField]
+    private float CrateInstantiationTimer;
+    private float CopyCrateInstantiationTimer;
 
 
 
     public void Start()
     {
        CopyInstantiationtimer =  InstantiationTimer;
+       CopyCrateInstantiationTimer = CrateInstantiationTimer;
     }
     void Update()
     {
         CreateEnemy();
-        CopyInstantiationtimer -= 0.0001f;
+        CreateCrate();
     }
 
     void CreateEnemy()
     {
+            float x;
+            float y;
+            float z;
+
         InstantiationTimer -= Time.deltaTime;
         if (InstantiationTimer <= 0)
 
@@ -61,10 +70,27 @@ public class EnemyBehavior : MonoBehaviour
             }
             
             y = 1.5f;
-            pos = new Vector3(x, y, z);
+            Vector3 pos = new Vector3(x, y, z);
             Instantiate(Enemy, transform.position + pos  , Quaternion.identity);
-            InstantiationTimer = CopyInstantiationtimer;
-            
+            InstantiationTimer = CopyInstantiationtimer;  
+        }
+
+    }
+    void CreateCrate()
+    {
+        CrateInstantiationTimer -= Time.deltaTime;
+        if (CrateInstantiationTimer <= 0)
+        {
+            float x = UnityEngine.Random.Range(-15, 15);
+            float y = 20;
+            float z = UnityEngine.Random.Range(-15, 15);
+            Vector3 pos = new Vector3(x, y, z);
+
+            Instantiate(BonusCrate, transform.position + pos, Quaternion.identity);
+            CrateInstantiationTimer = CopyCrateInstantiationTimer;
+            Debug.Log(CrateInstantiationTimer);
+            Debug.Log(CopyCrateInstantiationTimer);
+
         }
     }
 }

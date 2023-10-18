@@ -7,8 +7,8 @@ public class ProjectilePool : MonoBehaviour
     [SerializeField]
     float poolSize;
 
-    [SerializeField]
-    GameObject projectilePrefab;
+    
+    public GameObject projectilePrefab;
 
     private List<Projectile> projectilesInPool;
 
