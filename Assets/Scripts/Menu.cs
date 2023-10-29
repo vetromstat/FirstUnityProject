@@ -12,9 +12,9 @@ public class Menu : MonoBehaviour
     }
 
     public void StartPressed()
-    {
+    {   
         SceneManager.LoadScene("SampleScene");
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("SampleScene"));
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByName("SampleScene"));
     }
 
     public void SettingsPressed()

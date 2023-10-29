@@ -15,7 +15,7 @@ public class Restart : MonoBehaviour
     public void ToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainMenu"));
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainMenu"));
         
       
     }
