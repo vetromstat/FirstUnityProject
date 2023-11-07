@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -15,6 +16,7 @@ public class EnemyMoving : MonoBehaviour
     public void Start()
     {
         target  = GameObject.FindWithTag("Player");
+       
     }
     void FixedUpdate()
     {
@@ -24,10 +26,10 @@ public class EnemyMoving : MonoBehaviour
 
     public void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Projectile"))
-        { 
-            float dmg = other.gameObject.GetComponent<Projectile>().GetDamage();
-            Health -= dmg;
+        if (other.gameObject.CompareTag("Deals damage"))
+        {
+            float dmg = target.GetComponent<Player>().WeaponIndex;
+            Health -= (dmg + 2) * 10;
             Debug.Log(Health);
         }
     }

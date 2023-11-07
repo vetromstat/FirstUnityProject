@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 using static Unity.VisualScripting.Member;
 using static UnityEditor.Progress;
 
-public class TopDownCharacterMover : MonoBehaviour
+public class Player : MonoBehaviour
 {
 
     [SerializeField]
@@ -22,11 +23,18 @@ public class TopDownCharacterMover : MonoBehaviour
     public float jumpForce = 2.0f;
     private float Health = 100;
     private Slider Slider;
+
+    GameObject[] Weapons = new GameObject[10];
+    [SerializeField]
+    private GameObject Weapon;
+    public int WeaponIndex = 0;
+    
     
     public void Start()
     {
         rb = GetComponent<Rigidbody>();
         Slider = GameObject.FindWithTag("HB").GetComponent<Slider>();
+        Weapons[0] = Weapon;
 
     }
     void FixedUpdate()
@@ -36,6 +44,7 @@ public class TopDownCharacterMover : MonoBehaviour
         HandleShootInput();
         HandleJump();
         HandleHP();
+        HandleSwitch();
     }
     void HandleMovementInput()
     {
@@ -72,7 +81,7 @@ public class TopDownCharacterMover : MonoBehaviour
             float dmg = 0.5f;
             Health -= dmg;
             Slider.value = Health;
-            Debug.Log(Health);
+          
         }
     }
     void OnCollisionExit()
@@ -114,7 +123,7 @@ public class TopDownCharacterMover : MonoBehaviour
 
         Health -= dmg;
         Slider.value = Health;
-        Debug.Log(Health);
+        //Debug.Log(Health);
 
     }
     void HandleHP()
@@ -123,6 +132,79 @@ public class TopDownCharacterMover : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+
+    void HandleSwitch()
+    {
+        if (Input.GetAxisRaw("Mouse ScrollWheel") != 0f)
+        {
+            if ((Input.GetAxisRaw("Mouse ScrollWheel") > 0) && ((WeaponIndex + 1) <= 9))
+            {
+                WeaponIndex = (WeaponIndex + 1);
+                Weapon = Weapons[WeaponIndex];
+                
+;            }
+            if ((Input.GetAxisRaw("Mouse ScrollWheel") < 0) && ((WeaponIndex - 1) >= 0))
+            {
+                WeaponIndex = (WeaponIndex - 1);
+                Weapon = Weapons[WeaponIndex];
+                
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            WeaponIndex = 0;
+            Weapon = Weapons[WeaponIndex];
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            WeaponIndex = 1;
+            Weapon = Weapons[WeaponIndex];
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            WeaponIndex = 2;
+            Weapon = Weapons[WeaponIndex];
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            WeaponIndex = 3;
+            Weapon = Weapons[WeaponIndex];
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            WeaponIndex = 4;
+            Weapon = Weapons[WeaponIndex];
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            WeaponIndex = 5;
+            Weapon = Weapons[WeaponIndex];
+            Debug.Log(WeaponIndex);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            WeaponIndex = 6;
+            Weapon = Weapons[WeaponIndex];
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            WeaponIndex = 7;
+            Weapon = Weapons[WeaponIndex];
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            WeaponIndex = 8;
+            Weapon = Weapons[WeaponIndex];
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            WeaponIndex = 9;
+            Weapon = Weapons[WeaponIndex];
+        }
+
+
     }
     void OnDisable()
     {
@@ -133,5 +215,8 @@ public class TopDownCharacterMover : MonoBehaviour
     {
         deathPanel.SetActive(false);
     }
-    
+    public int GetWeaponIndex()
+    {
+        return WeaponIndex;
+    }
 }
