@@ -35,7 +35,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject Weapon;
     public int WeaponIndex = 0;
-    
+
+    public int Points = 0;
     
     public void Start()
     {
@@ -44,7 +45,7 @@ public class Player : MonoBehaviour
         SliderArmor = GameObject.Find("ArmorBar").GetComponent<Slider>();
         Weapons[0] = Weapon;
         WeaponCooldowns.CopyTo(CopyWeaponCooldowns, 0);
-
+  
     }
     void FixedUpdate()
     {
@@ -74,12 +75,9 @@ public class Player : MonoBehaviour
                 Debug.Log(WeaponCooldowns[3]);
                 
             }
-
             else
             {
-                
                 WeaponCooldowns[i] = 0;
-                
             }
         }
         
@@ -312,6 +310,7 @@ public class Player : MonoBehaviour
             SwitchWeapon(WeaponIndex);
         }
     }
+ 
     void OnDisable()
     {
         deathPanel.SetActive(true);
