@@ -10,15 +10,17 @@ using static UnityEngine.GraphicsBuffer;
 public class Toolbar : MonoBehaviour
 {
     int Index;
-    
+    Player Pl;
+
     public RectTransform Outline;
+    
     public void Start()
-    {   
-       
+    {
+        Pl = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
     public void Update()
     {
-        Index = GameObject.FindWithTag("Player").GetComponent<Player>().WeaponIndex;
+        Index = Pl.WeaponIndex;    
         Outline.position = gameObject.transform.GetChild(Index).transform.position;
     }
 }

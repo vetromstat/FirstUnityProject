@@ -17,6 +17,5 @@ public class Restart : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
         //SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainMenu"));
         
-      
     }
 }
