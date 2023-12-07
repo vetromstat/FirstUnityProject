@@ -25,7 +25,8 @@ public class ProjectilePool : MonoBehaviour
 
     public Projectile Instantiate(Vector3 position,Quaternion rotation)
     {
-        Projectile _projectile = projectilesInPool[0];
+        
+        Projectile _projectile = projectilesInPool[0];        
         _projectile.transform.position = position;
         _projectile.transform.rotation = rotation;
         projectilesInPool.Remove(_projectile);  

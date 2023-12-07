@@ -1,18 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-public class Weapons : MonoBehaviour
+
+public interface WeaponBehavior
 {
-    public Image Weapon1;
-    void Start()
+    void Shoot();
+}
+public class SwordWaepon : WeaponBehavior
+{
+    public void Shoot()
     {
+
+    }
+}
+public class PlayerGunWeapon : WeaponBehavior
+{
+    public void Shoot()
+    {
+        PlayerGun.Instance.Shoot();
         
     }
+}
 
-    // Update is called once per frame
-    void Update()
+public class ArmorUpWeapon : WeaponBehavior
+{
+    public void Shoot()
     {
+        Player.ArmorUp(15);
         
+    }
+}
+
+public class HealWeapon : WeaponBehavior
+{
+    public void Shoot()
+    {
+       Player.Heal(15);
+         
     }
 }

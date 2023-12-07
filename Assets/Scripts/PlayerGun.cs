@@ -8,10 +8,9 @@ public class PlayerGun : MonoBehaviour
     Transform firingPoint;
 
     [SerializeField]
-    float firingSpeed;
+    public float firingSpeed;
 
     public static PlayerGun Instance;
-    // Start is called before the first frame update
 
     private float lastTimeShot = 0;
     void Awake()
@@ -23,9 +22,13 @@ public class PlayerGun : MonoBehaviour
     {
         if (lastTimeShot + firingSpeed <= Time.time) 
         {
+            
             Projectile _projectile = ProjectilePool.Instance.Instantiate(firingPoint.position, firingPoint.rotation);
             _projectile.Move();
             lastTimeShot = Time.time;
+          
+            
         }
+        
     }
 }

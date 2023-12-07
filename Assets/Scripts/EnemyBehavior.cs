@@ -16,9 +16,6 @@ public class EnemyMoving : MonoBehaviour
     public float Health = 100;
     private int CopyHealth; 
 
-
-   
-
     public void Start()
     {
 
@@ -39,7 +36,7 @@ public class EnemyMoving : MonoBehaviour
         {
             float dmg = target.GetComponent<Player>().WeaponIndex;
             Health -= (dmg + 2) * 10;
-            Debug.Log(Health);
+           
         }
     }
 

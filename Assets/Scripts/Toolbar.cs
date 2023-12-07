@@ -13,7 +13,8 @@ public class Toolbar : MonoBehaviour
     Player Pl;
 
     public RectTransform Outline;
-    
+    Color color = Color.white;
+
     public void Start()
     {
         Pl = GameObject.FindWithTag("Player").GetComponent<Player>();
@@ -22,5 +23,11 @@ public class Toolbar : MonoBehaviour
     {
         Index = Pl.WeaponIndex;    
         Outline.position = gameObject.transform.GetChild(Index).transform.position;
+
+        if (Pl.WeaponCooldowns[Pl.WeaponIndex] > 0) color = Color.red;
+        else color = Color.black;
+        color.a = 0.5f;
+        gameObject.GetComponent<Image>().color = color;
+       
     }
 }

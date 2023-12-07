@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using static Unity.VisualScripting.Member;
 using static UnityEditor.Progress;
 
@@ -23,28 +24,32 @@ public class Player : MonoBehaviour
     public Vector3 jump;        // jumpipng vars
     public float jumpForce = 2.0f;
 
-    private float Health = 100;
-    private float Armor = 0;            //armor and health vars 
-    private Slider SliderHealth;
-    private Slider SliderArmor;
+    private static float Health = 100;
+    private static float Armor = 0;            //armor and health vars 
+    private static Slider SliderHealth;
+    private static Slider SliderArmor;
 
     public GameObject[] Weapons = new GameObject[10];
     public float[] WeaponCooldowns = new float[10];
-    private float[] CopyWeaponCooldowns = new float[10];// Weapons vars
+    public  float[] WeaponAmmo = new float[10];
+    private float[] CopyWeaponAmmo = new float[10];
+    private float[] CopyWeaponCooldowns = new float[10];   // Weapons vars
     public Image[] WeaponImages = new Image[10];
     [SerializeField]
     private GameObject Weapon;
     public int WeaponIndex = 0;
 
     public int Points = 0;
-    
+    TMP_Text AmmoLabel;
     public void Start()
     {
         rb = GetComponent<Rigidbody>();
         SliderHealth = GameObject.Find("HealthBar").GetComponent<Slider>();
         SliderArmor = GameObject.Find("ArmorBar").GetComponent<Slider>();
+        AmmoLabel = GameObject.Find("AmmoLabel").GetComponent<TextMeshProUGUI>();
         Weapons[0] = Weapon;
         WeaponCooldowns.CopyTo(CopyWeaponCooldowns, 0);
+        WeaponAmmo.CopyTo(CopyWeaponAmmo, 0);
   
     }
     void FixedUpdate()
@@ -53,16 +58,14 @@ public class Player : MonoBehaviour
         HandleRotationInput();
         HandleJump();
         
-
-
     }
     public void Update()
     {
         HandleHP();
         HandleSwitch();
         HandleShootInput();
+        HandleAmmoLabel();
         TimersUpdate();
-
     }
     void TimersUpdate()
     {
@@ -71,9 +74,7 @@ public class Player : MonoBehaviour
             if (WeaponCooldowns[i] > 0)
             {
                 WeaponCooldowns[i] -= Time.deltaTime;
-                WeaponImages[i].fillAmount = 1 -  (WeaponCooldowns[i] /  CopyWeaponCooldowns[i]);
-                Debug.Log(WeaponCooldowns[3]);
-                
+                WeaponImages[i].fillAmount = 1 -  (WeaponCooldowns[i] /  CopyWeaponCooldowns[i]);   
             }
             else
             {
@@ -81,6 +82,15 @@ public class Player : MonoBehaviour
             }
         }
         
+    }
+    void HandleAmmoLabel()
+    {
+        string txt;
+        txt = ((int)Math.Round(WeaponAmmo[WeaponIndex])).ToString();
+        if (txt != "-1")
+            AmmoLabel.text = txt + " / " + CopyWeaponAmmo[WeaponIndex];
+        else
+            AmmoLabel.text = "1 / 1";
     }
     void HandleMovementInput()
     {
@@ -100,57 +110,37 @@ public class Player : MonoBehaviour
             transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
         }
     }
-
+    Dictionary<int, WeaponBehavior> weaponBehaviors = new Dictionary<int, WeaponBehavior>
+    {
+        {0, new SwordWaepon()},
+        {1, new PlayerGunWeapon()},
+        {2, new PlayerGunWeapon()},
+        {3, new ArmorUpWeapon()},
+        {4, new HealWeapon()}
+    };
     void HandleShootInput()
     {
         if (Input.GetButton("Fire1"))
         {
-           switch (WeaponIndex)
+
+                bool CoolDown = WeaponCooldowns[WeaponIndex] == 0;
+                bool AmmoAvailable = (WeaponAmmo[WeaponIndex] >= 0 | WeaponAmmo[WeaponIndex] == -1);
+
+            if (CoolDown && AmmoAvailable)
             {
-                    case 0:
-                    {
-                        break;
-                    }
-                    case 1:
-                    { 
-                        if (WeaponCooldowns[1] == 0)
-                        {
-                            PlayerGun.Instance.Shoot();
-                        }
-                        else return;
-                        break;
-                    }
-                    case 2:
-                    {
-                        if (WeaponCooldowns[2] == 0)
-                        {
-                            PlayerGun.Instance.Shoot();
-                        }
-                        else return;
-                        break;
-                    }
-                    case 3:
-                    {
-                        if (WeaponCooldowns[3] == 0)
-                        {
-                          
-                            ArmorUp(15);
-                            WeaponCooldowns[3] = CopyWeaponCooldowns[3];
-                           
-                        }
-                        else return;
-                        break;
-                    }
-                    case 4:
-                    {
-                        if (WeaponCooldowns[4] == 0)
-                        {
-                            Heal(15);
-                            WeaponCooldowns[4] = CopyWeaponCooldowns[4];
-                        }
-                        else return;
-                        break;
-                    }            
+                weaponBehaviors[WeaponIndex].Shoot();
+                if (WeaponAmmo[WeaponIndex] > 0) WeaponAmmo[WeaponIndex] -= Time.fixedDeltaTime;
+
+            }
+            else if (CoolDown && !AmmoAvailable)
+            {
+                WeaponAmmo[WeaponIndex] = CopyWeaponAmmo[WeaponIndex];
+                WeaponCooldowns[WeaponIndex] = CopyWeaponCooldowns[WeaponIndex];
+            }
+            if (WeaponAmmo[WeaponIndex] == -1 && CoolDown)
+            {
+                WeaponCooldowns[WeaponIndex] = CopyWeaponCooldowns[WeaponIndex];
+
             }
         }
     }
@@ -191,19 +181,19 @@ public class Player : MonoBehaviour
            
         }
     }
-    void Heal(float hp)
+    public static void Heal(float hp)
     {
         Health += hp;
         if (Health > 100) Health = 100;
         SliderHealth.value += hp;
-        
+
     }
-    void ArmorUp(float points)
+    public static void ArmorUp(float points)
     {
         Armor += points;
         if (Armor > 100) Armor = 100;
         SliderArmor.value += points;
-       
+        
     }
     void TakeDamage(float dmg)
     {
@@ -254,57 +244,57 @@ public class Player : MonoBehaviour
 
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             WeaponIndex = 0;
             SwitchWeapon(WeaponIndex);
 
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             WeaponIndex = 1;
             SwitchWeapon(WeaponIndex);
 
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
            
             WeaponIndex = 2;
             SwitchWeapon(WeaponIndex);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             
             WeaponIndex = 3;
             SwitchWeapon(WeaponIndex);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             WeaponIndex = 4;
             SwitchWeapon(WeaponIndex);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
             WeaponIndex = 5;
             SwitchWeapon(WeaponIndex);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
         {
             WeaponIndex = 6;
             SwitchWeapon(WeaponIndex);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha8))
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
         {
             WeaponIndex = 7;
             SwitchWeapon(WeaponIndex);
 
         }
-        if (Input.GetKeyDown(KeyCode.Alpha9))
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
         {
             WeaponIndex = 8;
             SwitchWeapon(WeaponIndex);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        else if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             WeaponIndex = 9;
             SwitchWeapon(WeaponIndex);
