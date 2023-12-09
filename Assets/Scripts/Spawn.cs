@@ -6,15 +6,13 @@ using UnityEngine.UIElements;
 using UnityEngine.VFX;
 using static UnityEditor.PlayerSettings;
 
-public class EnemyBehavior : MonoBehaviour
+public class Spawn : MonoBehaviour
 {
     [SerializeField]
     private GameObject Enemy;
     [SerializeField]
     private float InstantiationTimer;
     private float CopyInstantiationtimer;
-
-
 
     [SerializeField]
     private GameObject BonusCrate;

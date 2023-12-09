@@ -148,7 +148,7 @@ public class Player : MonoBehaviour
     {
         isGrounded = true;
         rb.velocity = Vector3.zero;
-        if (other.gameObject.CompareTag("Deals damage"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             TakeDamage(0.5f);
         }
@@ -169,7 +169,7 @@ public class Player : MonoBehaviour
     public void OnCollisionEnter(Collision other)
     {
       
-        if (other.gameObject.CompareTag("Deals damage"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             TakeDamage(10f);
         }

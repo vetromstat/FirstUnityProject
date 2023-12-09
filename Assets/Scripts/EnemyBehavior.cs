@@ -14,20 +14,28 @@ public class EnemyMoving : MonoBehaviour
 
     private GameObject target;
     public float Health = 100;
-    private int CopyHealth; 
+    private int CopyHealth;
+
+    [SerializeField]
+    TMP_Text hpLabel;
 
     public void Start()
     {
 
         target  = GameObject.FindWithTag("Player");
         CopyHealth = (int)Health;
-         
-
+        
+        
     }
     void FixedUpdate()
     {
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, moveSpeed * Time.deltaTime);
+        
+    }
+    public void Update()
+    {
         HandleHP();
+        HandleHPLabel();
     }
 
     public void OnCollisionEnter(Collision other)
@@ -39,7 +47,6 @@ public class EnemyMoving : MonoBehaviour
            
         }
     }
-
     void HandleHP()
     {
         if (Health <= 0)
@@ -47,7 +54,9 @@ public class EnemyMoving : MonoBehaviour
             target.GetComponent<Player>().Points += CopyHealth;
             Destroy(gameObject);
         }
-           
-
+    }
+    void HandleHPLabel()
+    {
+        hpLabel.text = Health.ToString();
     }
 }
