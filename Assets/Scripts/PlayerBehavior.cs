@@ -215,7 +215,9 @@ public class Player : MonoBehaviour
     {
         if (Health <= 0)
         {
+            Health = 100;
             gameObject.SetActive(false);
+
         }
     }
     void SwitchWeapon(int Index) {
@@ -304,6 +306,7 @@ public class Player : MonoBehaviour
     void OnDisable()
     {
         deathPanel.SetActive(true);
+        
     }
 
     void OnEnable()

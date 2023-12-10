@@ -10,8 +10,6 @@ public class Restart : MonoBehaviour
     public void ResetTheGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //GameObject.FindWithTag("Player").SetActive(true);
-        gameObject.SetActive(false);
     }
 
     public void ToMainMenu()

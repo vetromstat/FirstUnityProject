@@ -9,10 +9,15 @@ using static UnityEditor.PlayerSettings;
 public class Spawn : MonoBehaviour
 {
     [SerializeField]
-    private GameObject Enemy;
+    private GameObject BigEnemy;
     [SerializeField]
-    private float InstantiationTimer;
-    private float CopyInstantiationtimer;
+    private GameObject SmallEnemy;
+    [SerializeField]
+    private float BigInstantiationTimer;
+    private float BigCopyInstantiationtimer;
+    [SerializeField]
+    private float SmallInstantiationTimer;
+    private float SmallCopyInstantiationtimer;
 
     [SerializeField]
     private GameObject BonusCrate;
@@ -24,23 +29,64 @@ public class Spawn : MonoBehaviour
 
     public void Start()
     {
-       CopyInstantiationtimer =  InstantiationTimer;
+       BigCopyInstantiationtimer =  BigInstantiationTimer;
+       SmallCopyInstantiationtimer = SmallInstantiationTimer;
        CopyCrateInstantiationTimer = CrateInstantiationTimer;
     }
     void Update()
     {
-        CreateEnemy();
+        CreateBigEnemy();
         CreateCrate();
+        CreateSmallEnemy();
     }
+    void CreateSmallEnemy()
+    {
+        float x;
+        float y;
+        float z;
 
-    void CreateEnemy()
+        SmallInstantiationTimer -= Time.deltaTime;
+        if (SmallInstantiationTimer <= 0)
+
+        { // To do next 
+            int choice = UnityEngine.Random.Range(0, 2);
+
+            if (choice == 0)
+            {
+                x = UnityEngine.Random.Range(-20, -10);
+            }
+            else
+            {
+                x = UnityEngine.Random.Range(10, 20);
+
+            }
+
+            choice = UnityEngine.Random.Range(0, 2);
+
+            if (choice == 0)
+            {
+                z = UnityEngine.Random.Range(-40, -30);
+            }
+            else
+            {
+                z = UnityEngine.Random.Range(30, 40);
+
+            }
+
+            y = 1.5f;
+            Vector3 pos = new Vector3(x, y, z);
+            Instantiate(SmallEnemy, transform.position + pos, Quaternion.identity);
+            SmallInstantiationTimer = SmallCopyInstantiationtimer;
+        }
+    }
+    void CreateBigEnemy()
     {
             float x;
             float y;
             float z;
 
-        InstantiationTimer -= Time.deltaTime;
-        if (InstantiationTimer <= 0)
+        BigInstantiationTimer -= Time.deltaTime;
+        if (BigInstantiationTimer <= 0)
 
         { // To do next 
             int choice = UnityEngine.Random.Range(0, 2);
@@ -69,10 +115,9 @@ public class Spawn : MonoBehaviour
             
             y = 1.5f;
             Vector3 pos = new Vector3(x, y, z);
-            Instantiate(Enemy, transform.position + pos  , Quaternion.identity);
-            InstantiationTimer = CopyInstantiationtimer;  
+            Instantiate(BigEnemy, transform.position + pos  , Quaternion.identity);
+            BigInstantiationTimer = BigCopyInstantiationtimer;  
         }
-
     }
     void CreateCrate()
     {
