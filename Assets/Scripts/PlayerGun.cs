@@ -17,7 +17,10 @@ public class PlayerGun : MonoBehaviour
     {
         Instance  = GetComponent<PlayerGun>();
     }
-
+    public void OnEnable()
+    {
+        Instance = GetComponent<PlayerGun>();
+    }
     public void Shoot()
     {
         if (lastTimeShot + firingSpeed <= Time.time) 

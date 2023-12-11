@@ -50,7 +50,8 @@ public class Player : MonoBehaviour
         Weapons[0] = Weapon;
         WeaponCooldowns.CopyTo(CopyWeaponCooldowns, 0);
         WeaponAmmo.CopyTo(CopyWeaponAmmo, 0);
-  
+        
+
     }
     void FixedUpdate()
     {
@@ -306,7 +307,9 @@ public class Player : MonoBehaviour
     void OnDisable()
     {
         deathPanel.SetActive(true);
-        
+        float highScore = PlayerPrefs.GetFloat("highScore");
+        if (highScore <  Points) PlayerPrefs.SetFloat("highScore", Points);
+
     }
 
     void OnEnable()

@@ -16,6 +16,8 @@ public class EnemyMoving : MonoBehaviour
     public float Health = 100;
     private int CopyHealth;
 
+    private float maxMoveSpeed = 6;
+
     [SerializeField]
     TMP_Text hpLabel;
 
@@ -36,6 +38,7 @@ public class EnemyMoving : MonoBehaviour
     {
         HandleHP();
         HandleHPLabel();
+        DifficultyScaler();
     }
 
     public void OnCollisionEnter(Collision other)
@@ -45,6 +48,15 @@ public class EnemyMoving : MonoBehaviour
             float dmg = target.GetComponent<Player>().WeaponIndex;
             Health -= (dmg + 2) * 10;
            
+        }
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Deals damage"))
+        {
+            float dmg = target.GetComponent<Player>().WeaponIndex;
+            Health -= (dmg + 2) * 10;
+
         }
     }
     void HandleHP()
@@ -59,4 +71,13 @@ public class EnemyMoving : MonoBehaviour
     {
         hpLabel.text = Health.ToString();
     }
+    void DifficultyScaler()
+    {
+        if ( moveSpeed < maxMoveSpeed)
+        {
+            moveSpeed += 0.000001f;
+        }
+    }
+
+
 }
