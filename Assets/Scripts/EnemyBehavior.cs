@@ -75,7 +75,7 @@ public class EnemyMoving : MonoBehaviour
     {
         if ( moveSpeed < maxMoveSpeed)
         {
-            moveSpeed += 0.000001f;
+            moveSpeed += 0.005f;
         }
     }
 
