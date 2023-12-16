@@ -29,12 +29,12 @@ public class Player : MonoBehaviour
     private static Slider SliderHealth;
     private static Slider SliderArmor;
 
-    public GameObject[] Weapons = new GameObject[10];
-    public float[] WeaponCooldowns = new float[10];
-    public  float[] WeaponAmmo = new float[10];
-    private float[] CopyWeaponAmmo = new float[10];
-    private float[] CopyWeaponCooldowns = new float[10];   // Weapons vars
-    public Image[] WeaponImages = new Image[10];
+    public GameObject[] Weapons = new GameObject[5];
+    public float[] WeaponCooldowns = new float[5];
+    public  float[] WeaponAmmo = new float[5];
+    private float[] CopyWeaponAmmo = new float[5];
+    private float[] CopyWeaponCooldowns = new float[5];   // Weapons vars
+    public Image[] WeaponImages = new Image[5];
     [SerializeField]
     private GameObject Weapon;
     public int WeaponIndex = 0;
@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
     }
     void TimersUpdate()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             if (WeaponCooldowns[i] > 0)
             {
@@ -157,7 +157,6 @@ public class Player : MonoBehaviour
     void OnCollisionExit()
     {
         isGrounded = false;
-        
     }
     void HandleJump()
     {
@@ -169,7 +168,6 @@ public class Player : MonoBehaviour
     }
     public void OnCollisionEnter(Collision other)
     {
-      
         if (other.gameObject.CompareTag("Enemy"))
         {
             TakeDamage(10f);
@@ -179,7 +177,6 @@ public class Player : MonoBehaviour
             Heal(30);
             ArmorUp(30);
             Destroy(other.gameObject);
-           
         }
     }
     public static void Heal(float hp)
@@ -187,14 +184,12 @@ public class Player : MonoBehaviour
         Health += hp;
         if (Health > 100) Health = 100;
         SliderHealth.value += hp;
-
     }
     public static void ArmorUp(float points)
     {
         Armor += points;
         if (Armor > 100) Armor = 100;
-        SliderArmor.value += points;
-        
+        SliderArmor.value += points;  
     }
     void TakeDamage(float dmg)
     {
@@ -207,10 +202,8 @@ public class Player : MonoBehaviour
         else
         {
             Health -= dmg;
-            SliderHealth.value = Health;
-           
+            SliderHealth.value = Health;  
         }
-
     }
     void HandleHP()
     {
@@ -233,7 +226,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetAxisRaw("Mouse ScrollWheel") != 0f)
         {
-            if ((Input.GetAxisRaw("Mouse ScrollWheel") > 0) && ((WeaponIndex + 1) <= 9))
+            if ((Input.GetAxisRaw("Mouse ScrollWheel") > 0) && ((WeaponIndex + 1) <= 4))
             {
                 WeaponIndex = (WeaponIndex + 1);
                 SwitchWeapon(WeaponIndex); 
@@ -276,32 +269,7 @@ public class Player : MonoBehaviour
             WeaponIndex = 4;
             SwitchWeapon(WeaponIndex);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            WeaponIndex = 5;
-            SwitchWeapon(WeaponIndex);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            WeaponIndex = 6;
-            SwitchWeapon(WeaponIndex);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            WeaponIndex = 7;
-            SwitchWeapon(WeaponIndex);
 
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            WeaponIndex = 8;
-            SwitchWeapon(WeaponIndex);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            WeaponIndex = 9;
-            SwitchWeapon(WeaponIndex);
-        }
     }
  
     void OnDisable()

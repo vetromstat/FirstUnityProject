@@ -5,13 +5,11 @@ using UnityEngine;
 public class MeeleSlash : MonoBehaviour
 {
     Animator Animator;
-    float SlashTimer = 1.5f;
+    
     void Start()
     {
         Animator = GetComponent<Animator>();
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetButton("Fire1")) Animator.Play("SwordSlash");

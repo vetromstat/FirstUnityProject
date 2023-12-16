@@ -5,7 +5,6 @@ using TMPro;
 
 public class Points : MonoBehaviour
 {
-
     private TMP_Text TMP;
     private GameObject Pl;
     void Start()

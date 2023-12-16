@@ -19,12 +19,13 @@ public class Spawn : MonoBehaviour
     private float SmallInstantiationTimer;
     private float SmallCopyInstantiationtimer;
 
+    private float MinInstantiationTime = 2f;
+
     [SerializeField]
     private GameObject BonusCrate;
     [SerializeField]
     private float CrateInstantiationTimer;
     private float CopyCrateInstantiationTimer;
-
 
 
     public void Start()
@@ -38,6 +39,15 @@ public class Spawn : MonoBehaviour
         CreateBigEnemy();
         CreateCrate();
         CreateSmallEnemy();
+        HandleDifficulty();
+    }
+    void HandleDifficulty()
+    {
+        if (BigCopyInstantiationtimer > MinInstantiationTime)
+        {
+            BigCopyInstantiationtimer -= 0.000001f;
+            SmallCopyInstantiationtimer -= 0.000001f;
+        }
     }
     void CreateSmallEnemy()
     {

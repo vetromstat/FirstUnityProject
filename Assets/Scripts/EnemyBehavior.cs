@@ -13,6 +13,7 @@ public class EnemyMoving : MonoBehaviour
     float moveSpeed;
 
     private GameObject target;
+    private Player Pl;
     public float Health = 100;
     private int CopyHealth;
 
@@ -26,6 +27,7 @@ public class EnemyMoving : MonoBehaviour
 
         target  = GameObject.FindWithTag("Player");
         CopyHealth = (int)Health;
+        Pl = target.GetComponent<Player>();
         
         
     }
@@ -45,7 +47,7 @@ public class EnemyMoving : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Deals damage"))
         {
-            float dmg = target.GetComponent<Player>().WeaponIndex;
+            float dmg = Pl.WeaponIndex;
             Health -= (dmg + 2) * 10;
            
         }
@@ -54,7 +56,7 @@ public class EnemyMoving : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Deals damage"))
         {
-            float dmg = target.GetComponent<Player>().WeaponIndex;
+            float dmg = Pl.WeaponIndex;
             Health -= (dmg + 2) * 10;
 
         }
@@ -63,7 +65,7 @@ public class EnemyMoving : MonoBehaviour
     {
         if (Health <= 0)
         {
-            target.GetComponent<Player>().Points += CopyHealth;
+            Pl.Points += CopyHealth;
             Destroy(gameObject);
         }
     }
@@ -75,7 +77,7 @@ public class EnemyMoving : MonoBehaviour
     {
         if ( moveSpeed < maxMoveSpeed)
         {
-            moveSpeed += 0.005f;
+            moveSpeed += 0.0025f;
         }
     }
 
