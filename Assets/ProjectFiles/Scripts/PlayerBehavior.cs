@@ -1,18 +1,11 @@
-using JetBrains.Annotations;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using static Unity.VisualScripting.Member;
-using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour
 {
-
     [SerializeField]
     private float movementSpeed;
     [SerializeField]

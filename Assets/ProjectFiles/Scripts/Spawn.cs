@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.VFX;
-using static UnityEditor.PlayerSettings;
+
 
 public class Spawn : MonoBehaviour
 {
